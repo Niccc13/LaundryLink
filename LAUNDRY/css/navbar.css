@@ -1,0 +1,66 @@
+.navbar{
+    display:flex;
+    justify-content:space-between;
+    gap:1rem;
+    padding:2rem 1.25rem;
+    background:  linear-gradient(135deg,#ffffff 0%, #a7d3ff 50%, #7a9cf9 100%);
+    border-radius:12px;
+    box-shadow:var(--shadow-1);
+    position:sticky;
+    top:18px;
+    z-index:1200;
+}
+
+.burger{
+    display:inline-flex;
+    width:44px; height:44px;
+    align-items:center; justify-content:center;
+    border-radius:10px;
+    font-size:20px;
+    cursor:pointer;
+    background:linear-gradient(180deg,#ffffff,#8fc7ff);
+    border:1px solid #eef4ff;
+    box-shadow:0 6px 18px rgba(4, 24, 95, 0.06);
+}
+
+.navnav{
+    display:flex;
+    gap:12px;
+    align-items:center;
+}
+
+.nav-right{
+    display:flex; 
+    align-items:center; 
+    gap:1rem;
+}
+
+.brand{
+    display:flex; 
+    gap:.7rem; 
+    align-items:center;
+}
+
+.brand img{
+    width:44px;
+    height:44px;
+    border-radius:8px;
+}
+
+.brand .title{
+    font-family: math; 
+    font-weight:800; 
+    color:var(--primary); 
+    font-size:xx-large;
+}
+
+.profile-pill{
+    display:flex; 
+    gap:.5rem; 
+    align-items:center; 
+    padding:.35rem .6rem .35rem 1rem; 
+    border-radius:999px; 
+    background:#fff; 
+    border:1px solid #eef4ff;
+    box-shadow:0 2px 8px rgba(0,0,0,0.05);
+}

@@ -1,0 +1,16 @@
+/* LAUNDRY PAGES - Add Customer & Forms */
+#addCustomer .card {
+    margin-top: 20px;
+}
+
+#custService {
+    margin-bottom: 10px;
+}
+
+#specialOptions {
+    margin-top: 15px;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}

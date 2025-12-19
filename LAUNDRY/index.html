@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>LaundryLink</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="loginScreen">
+    <div class="login-card">
+        <div class="login-splash">
+            <img src="images/Laundry-Logo.png" alt="LaundryFlow Logo" class="logo" onerror="this.style.display='none'">
+            <h2 style="color: var(--primary); margin-top: 20px;">LaundryLink</h2>
+            <p style="color: var(--muted); font-size: 0.9rem;">Automated Laundry Service System</p>
+        </div>
+        <div class="login-form">
+            <h2>Log In</h2>
+            <div class="input-group">
+                <label for="loginUser" class="small-muted">Username</label>
+                <input id="loginUser" type="text" placeholder="Enter username" value="admin">
+            </div>
+            <div style="height:10px"></div>
+            
+            <div class="input-group">
+                <label for="loginPass" class="small-muted">Password</label>
+                <div class="password-wrapper">
+                    <input id="loginPass" type="password" placeholder="Enter password" value="1234">
+                    <span class="password-toggle" onclick="togglePassword('loginPass', this)">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                    </span>
+                </div>
+            </div>
+            <div style="height:20px"></div>
+            <button class="btn" onclick="loginStaff()">Login</button>
+            <div style="margin-top:12px; text-align:center">
+                <a href="#" onclick="showRegister()" style="color:var(--primary); text-decoration:none">
+                    Create New Account
+                </a>
+            </div>
+            <div style="margin-top: 25px; padding-top: 15px; border-top: 1px solid #eee; font-size: 0.8rem; color: #777; line-height: 1.4; text-align: center;">
+    <strong style="color: var(--primary); display: block; margin-bottom: 4px;">System Support</strong>
+    For technical issues, bugs, or account lockouts, please contact the System Administrator or Technical Support team.
+    laundrylink4@gmail.com
+</div>
+        </div>
+    </div>
+</div>
+
+<div id="registerScreen" style="display:none">
+    <div class="login-card">
+        <div class="login-splash">
+            <img src="images/Laundry-Logo.png" alt="LaundryFlow Logo" class="logo" onerror="this.style.display='none'">
+            <h2 style="color: var(--primary); margin-top: 20px;">Create Account</h2>
+        </div>
+        <div class="login-form">
+            <h2>New Account</h2>
+            <div class="input-group">
+                <label for="regName" class="small-muted">Full Name</label>
+                <input id="regName" type="text" placeholder="Enter your name">
+            </div>
+            <div style="height:10px"></div>
+            <div class="input-group">
+                <label for="regUser" class="small-muted">Username</label>
+                <input id="regUser" type="text" placeholder="Choose username">
+            </div>
+            <div style="height:10px"></div>
+            <div class="input-group">
+                <label for="regPass" class="small-muted">Password</label>
+                <div class="password-wrapper">
+                    <input id="regPass" type="password" placeholder="Enter password" oninput="checkPasswordStrength()">
+                    <span class="password-toggle" onclick="togglePassword('regPass', this)">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                    </span>
+                </div>
+                <div id="passwordRequirements" style="display: none; margin-top: 6px;">
+                    <div style="display: flex; align-items: center; gap: 8px; font-size: 0.75rem;">
+                        <span style="color: var(--muted);">Requirements:</span>
+                        <div style="display: flex; gap: 4px;">
+                            <span id="req8" title="At least 8 characters" style="padding: 1px 4px; border-radius: 2px; background: #f0f0f0; font-size: 0.7rem;">8+</span>
+                            <span id="reqA" title="Uppercase letter" style="padding: 1px 4px; border-radius: 2px; background: #f0f0f0; font-size: 0.7rem;">A</span>
+                            <span id="reqa" title="Lowercase letter" style="padding: 1px 4px; border-radius: 2px; background: #f0f0f0; font-size: 0.7rem;">a</span>
+                            <span id="req1" title="Number" style="padding: 1px 4px; border-radius: 2px; background: #f0f0f0; font-size: 0.7rem;">1</span>
+                            <span id="reqS" title="Special character" style="padding: 1px 4px; border-radius: 2px; background: #f0f0f0; font-size: 0.7rem;">!</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="passwordStrength" style="display: none; margin-top: 4px;">
+                    <div style="display: flex; align-items: center; gap: 8px; font-size: 0.75rem;">
+                        <span id="strengthText">Strength:</span>
+                        <div style="flex-grow: 1; height: 4px; background: #eee; border-radius: 2px; overflow: hidden;">
+                            <div id="strengthBar" style="height: 100%; width: 0%; transition: width 0.3s, background-color 0.3s;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="height:10px"></div>
+            <div class="input-group">
+                <label for="regRole" class="small-muted">Account Type</label>
+                <select id="regRole" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:6px;">
+                    <option value="staff">Staff</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+            <div style="height:20px"></div>
+            <button class="btn" onclick="registerAccount()">Register</button>
+            <div style="margin-top:12px; text-align:center">
+                <a href="#" onclick="showLogin()" style="color:var(--primary); text-decoration:none">
+                     Back to Login
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container" id="navbarWrap">
+    <div class="navbar">
+        <div class="navnav">
+            <div class="burger" id="burger" title="Toggle menu" onclick="toggleSidebar()">☰</div>
+            <div class="brand" onclick="openPage('dashboard')" style="cursor:pointer">
+                <div class="title">LaundryLink</div>
+            </div>
+        </div>
+        <div class="nav-right">
+            <div class="muted">Welcome, <strong id="userLabel">Admin</strong></div>
+            <div class="profile-pill">
+                <div style="font-weight:700; color:var(--primary)" id="userRoleDisplay">Admin</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+
+<nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+        <img src="images/Laundry-Logo.png" alt="LaundryLink Logo" class="sidebar-logo-img" >
+        <div style="color: var(--primary); font-weight: 700; font-size: 1.1rem; margin-top: 8px;">
+            LaundryLink
+        </div>
+        </div>
+    <div class="menumenu">MENU</div>
+    <div class="navlink active" data-page="dashboard" onclick="openPage('dashboard')">🏠 Dashboard</div>
+    <div class="navlink" data-page="addCustomer" onclick="openPage('addCustomer')">➕ Add Customer</div>
+    <div class="navlink" data-page="records" onclick="openPage('records')">📄 Laundry Records</div>
+    <div class="navlink" data-page="reports" onclick="openPage('reports')">📊 Reports</div>
+    <div class="navlink" data-page="userManagement" onclick="openPage('userManagement')">👥 User Management</div>
+    <div style="height: 200px"></div>
+    <div class="navlink" id="logout" onclick="logout()">⎋ Logout</div>
+</nav>
+</div>
+
+<div class="container" id="appRoot" style="display:none">
+    <main class="app">
+        <div class="view">
+
+<section id="dashboard" class="page view-section">
+    <h1 style="font-size:1.4rem">Dashboard</h1>
+    <p class="muted">Overview of your laundry operations</p>
+    
+  
+    <div class="washing-machines-grid" style="margin: 24px 0 32px;">
+      
+        <div class="washing-machine-card">
+            <div class="machine-top-panel">
+                <div class="machine-controls">
+                    <div class="control-btn large"></div>
+                    <div class="control-btn large"></div>
+                    <div class="control-btn large"></div>
+                </div>
+                <div class="machine-label">
+                    <span class="label-text">Active Orders</span>
+                </div>
+            </div>
+            <div class="machine-body">
+                <div class="machine-door">
+                    <div class="door-circle">
+                        <div class="door-number" id="statActive">0</div>
+                    </div>
+                    <div class="door-handle"></div>
+                </div>
+                <div class="machine-base">
+                    <div class="base-detail"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="washing-machine-card">
+            <div class="machine-top-panel">
+                <div class="machine-controls">
+                    <div class="control-btn large"></div>
+                    <div class="control-btn large"></div>
+                    <div class="control-btn large"></div>
+                </div>
+                <div class="machine-label">
+                    <span class="label-text">Completed</span>
+                </div>
+            </div>
+            <div class="machine-body">
+                <div class="machine-door">
+                    <div class="door-circle">
+                        <div class="door-number" id="statDone">0</div>
+                    </div>
+                    <div class="door-handle"></div>
+                </div>
+                <div class="machine-base">
+                    <div class="base-detail"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="washing-machine-card">
+            <div class="machine-top-panel">
+                <div class="machine-controls">
+                    <div class="control-btn large"></div>
+                    <div class="control-btn large"></div>
+                    <div class="control-btn large"></div>
+                </div>
+                <div class="machine-label">
+                    <span class="label-text">Total Customers</span>
+                </div>
+            </div>
+            <div class="machine-body">
+                <div class="machine-door">
+                    <div class="door-circle">
+                        <div class="door-number" id="statTotal">0</div>
+                    </div>
+                    <div class="door-handle"></div>
+                </div>
+                <div class="machine-base">
+                    <div class="base-detail"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+            <section id="addCustomer" class="page view-section" style="display:none">
+                <h1 style="font-size:1.4rem">Add Customer</h1>
+                <p class="muted">New order entry</p>
+                <div class="card">  
+                    <div style="display:flex; gap:14px; align-items:flex-start; flex-wrap:wrap">
+                        <div style="flex:1; min-width:260px">
+                            <label class="small-muted">Customer Name</label>
+                            <input id="custName" placeholder="Full Name" oninput="autoGenerateQR()">
+                            
+                            <label class="small-muted" style="margin-top:8px">Kilos</label>
+                            <input id="custKilos" type="number" placeholder="kg" oninput="autoGenerateQR()">
+                            
+                            <label class="small-muted" style="margin-top:8px">Service Type</label>
+                            <select id="custService" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:6px;">
+                                <option value="" disabled selected>Select Service</option>
+                                <option>Wash & Fold</option>
+                                <option>Wash & Iron</option>
+                                <option>Dry Clean</option>
+                                <option>Express Service</option>
+                                <option value="Special Treatment">Special Treatment</option>
+                            </select>
+                            
+                            <div id="specialOptions" style="display:none; margin-top:8px;">
+                                <label class="small-muted">Special Treatment Type</label>
+                                <select id="custSpecialType" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:6px;">
+                                    <option disabled selected>Select Treatment</option>
+                                    <option>Bleaching</option>
+                                    <option>Stain Removal</option>
+                                </select>
+                            </div>
+                            
+                           <label class="small-muted" style="margin-top:8px">Email</label>
+<input 
+    id="custEmail"
+    type="email"
+    placeholder="customer@example.com"
+    required
+    pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+>
+<span id="emailError" style="color:red; font-size:12px; display:none;">
+    Please enter a valid email address (example@gmail.com)
+</span>
+
+                        
+                        <div style="width:260px">
+                            <label class="small-muted">QR Code</label>
+                            <input id="custQR" readonly placeholder="Auto-generated">
+                            <div style="margin-top:12px; display:flex; gap:8px">
+                                <button class="btn" onclick="saveLaundry()">Save</button>
+                                <button class="btn secondary" onclick="showQRPreview()">Preview QR</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+             <section id="records" class="page view-section" style="display:none">
+    <div style="margin-bottom:12px">
+        <h1 style="font-size:1.4rem">Laundry Records</h1>
+        <p class="muted">Manage orders</p>
+    </div>
+    
+    <div id="qrScannerContainer" style="display:none; margin:12px 0; text-align:center; background:#f0f0f0; padding:10px; border-radius:8px;">
+        <h4>Scanning...</h4>
+        <div id="qrScanner" style="width:300px; margin:auto;"></div>
+        <button class="btn secondary" style="margin-top:10px" onclick="stopScanner()">Stop Scanner</button>
+    </div>
+    
+    <div class="filter-bar" style="display:flex; gap:12px; margin-bottom:16px; flex-wrap:wrap; align-items:center">
+    <div style="flex:1; min-width:200px; display:flex; gap:8px;">
+        <input id="searchBox" placeholder="Search by name, email, or QR..." style="width:100%; padding:.5rem .75rem; border-radius:8px; border:1px solid #e6eefb;" oninput="displayRecords()" />
+        
+        <button class="btn" onclick="startScanner()" style="padding: 0 15px; display:flex; align-items:center; gap:5px;">
+             📷 Scan
+        </button>
+    </div>
+        
+        <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap">
+            <label class="small-muted">Filter by:</label>
+            <select id="filterStatus" style="width:140px; padding:.5rem .75rem; border-radius:8px; border:1px solid #e6eefb;" onchange="displayRecords()">
+                <option value="all">All Status</option>
+                <option value="Pending">Pending</option>
+                <option value="Done">Done</option>
+            </select>
+            
+            <select id="filterService" style="width:160px; padding:.5rem .75rem; border-radius:8px; border:1px solid #e6eefb;" onchange="displayRecords()">
+                <option value="all">All Services</option>
+                <option value="Wash & Fold">Wash & Fold</option>
+                <option value="Wash & Iron">Wash & Iron</option>
+                <option value="Dry Clean">Dry Clean</option>
+                <option value="Express Service">Express Service</option>
+                <option value="Special Treatment">Special Treatment</option>
+            </select>
+            
+            <select id="filterDate" style="width:140px; padding:.5rem .75rem; border-radius:8px; border:1px solid #e6eefb;" onchange="displayRecords()">
+                <option value="all">All Dates</option>
+                <option value="today">Today</option>
+                <option value="week">This Week</option>
+                <option value="month">This Month</option>
+            </select>
+        </div>
+        
+        <div style="display:flex; gap:8px; align-items:center">
+            <label class="small-muted">Sort by:</label>
+            <select id="sortBy" style="width:140px; padding:.5rem .75rem; border-radius:8px; border:1px solid #e6eefb;" onchange="displayRecords()">
+                <option value="date_desc">Date (Newest)</option>
+                <option value="date_asc">Date (Oldest)</option>
+                <option value="name_asc">Name (A-Z)</option>
+                <option value="name_desc">Name (Z-A)</option>
+                <option value="kilos_asc">Kilos (Low-High)</option>
+                <option value="kilos_desc">Kilos (High-Low)</option>
+                <option value="status">Status</option>
+            </select>
+            
+            <button class="btn secondary" onclick="resetFilters()" style="padding:.5rem .75rem; font-size:.85rem">
+                Reset
+            </button>
+        </div>
+    </div>
+    
+    <div class="recordcard">
+        <div style="padding:12px 16px; border-bottom:1px solid #f1f6ff; display:flex; justify-content:space-between; align-items:center">
+            <div>
+                <span id="recordCount">0</span> records found
+            </div>
+        </div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th onclick="sortTable('name')">Name ▾</th>
+                        <th onclick="sortTable('kilos')">Kilos ▾</th>
+                        <th>Email</th>
+                        <th onclick="sortTable('qr')">QR ▾</th>
+                        <th onclick="sortTable('service')">Service ▾</th>
+                        <th onclick="sortTable('date')">Date ▾</th>
+                        <th onclick="sortTable('price')">Price ▾</th>
+                        <th onclick="sortTable('status')">Status ▾</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="recordsTable"></tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+           <section id="reports" class="page view-section" style="display:none">
+    
+    <div class="print-header">
+        <div class="print-logo-section">
+            <img src="images/Laundry-Logo.png" alt="Logo" class="print-logo">
+            <div class="print-company-info">
+                <h1>LaundryLink</h1>
+                <p>123 Laundry Street, General Tinio, Nueva Ecija, Philippines</p>
+                <p>Contact: 0999 999 9999 | email@laundrylink.ph</p>
+            </div>
+        </div>
+        <hr>
+        <div class="print-meta">
+            <h2 id="printTitle">Sales & Order Report</h2>
+            <p>Period: <span id="printPeriod">All Time</span></p>
+            <p>Generated by: <span id="printUser">Admin</span> | Date: <span id="printDate"></span></p>
+        </div>
+    </div>
+
+    <div class="report-controls no-print">
+        <div class="report-header">
+            <h1>Reports & Analytics</h1>
+            <p class="muted">Financial performance and order tracking</p>
+        </div>
+        <div class="filter-group">
+            <div class="date-inputs">
+                <div class="input-wrapper">
+                    <label>From</label>
+                    <input type="date" id="reportStart">
+                </div>
+                <div class="input-wrapper">
+                    <label>To</label>
+                    <input type="date" id="reportEnd">
+                </div>
+            </div>
+            <div class="button-group">
+                <button class="btn primary" onclick="updateReports()">Filter Data</button>
+                <button class="btn secondary" onclick="resetReportFilters()">Reset</button>
+                <button class="btn accent" onclick="printReport()">🖨️ Print Formal Report</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- STATS DASHBOARD -->
+    <div class="report-stats-grid">
+        <div class="r-stat-card total">
+            <div class="r-icon">📦</div>
+            <div class="r-info">
+                <span class="r-label">Total Orders</span>
+                <span class="r-value" id="reportTotal">0</span>
+            </div>
+        </div>
+        <div class="r-stat-card revenue">
+            <div class="r-icon">💰</div>
+            <div class="r-info">
+                <span class="r-label">Total Revenue</span>
+                <span class="r-value" id="reportRevenue">₱0.00</span>
+            </div>
+        </div>
+        <div class="r-stat-card pending">
+            <div class="r-icon">⏳</div>
+            <div class="r-info">
+                <span class="r-label">Pending / Active</span>
+                <span class="r-value" id="reportPending">0</span>
+            </div>
+        </div>
+        <div class="r-stat-card completed">
+            <div class="r-icon">✅</div>
+            <div class="r-info">
+                <span class="r-label">Completed</span>
+                <span class="r-value" id="reportDone">0</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- DATA TABLE -->
+    <div class="card report-table-card">
+        <h3 class="no-print" style="margin-bottom:15px; padding-left:15px;">Detailed Transaction Log</h3>
+        <div class="table-wrap">
+            <table class="report-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Customer</th>
+                        <th>Service</th>
+                        <th>Kilos</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="reportsTable"></tbody>
+                
+            </table>
+        </div>
+    </div>
+
+    <div class="print-footer">
+        <div class="signature-box">
+            <div class="line"></div>
+            <p>Prepared By</p>
+        </div>
+        <div class="signature-box">
+            <div class="line"></div>
+            <p>Approved By</p>
+        </div>
+    </div>
+</section>
+
+<section id="userManagement" class="page view-section" style="display:none">
+       <h1 style="font-size:1.4rem"> User Management</h1>
+          <p class="muted">Manage staff and admin accounts</p>
+                
+          <div class="card" style="margin-bottom:20px">
+               <h3 class="approvalss"> Pending Approvals</h3>
+              <div class="table-wrap">
+                <table>
+                <thead>
+         <tr>
+                       <th>Name</th><th>Username</th><th>Role</th><th>Status</th><th>Date</th><th>Actions</th>
+                        </tr>
+                   </thead>
+                  <tbody id="pendingTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3 class="approvalss"> Active Users</h3>
+                    <div class="table-wrap">
+                        <table>
+         <thead>
+                                <tr>
+                       <th>Name</th><th>Username</th><th>Role</th><th>Status</th><th>Last Login</th><th>Actions</th>
+                                </tr>
+                            </thead>
+                    <tbody id="activeUsersTable"></tbody>
+                        </table>
+           </div>
+                </div>
+                
+            </section>
+
+        </div>
+    </main>
+</div>
+
+<div id="qrPopup" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:6000; justify-content:center; align-items:center;">
+    <div style="background:white; padding:16px; border-radius:12px; text-align:center;">
+        <h3>QR Preview</h3>
+        <canvas id="qrCanvas" style="margin:8px auto; border:1px solid #eee"></canvas>
+        <div style="display:flex; gap:8px; justify-content:center; margin-top:10px">
+            <button class="btn" onclick="downloadQR()">Download</button>
+            <button class="btn secondary" onclick="closeQR()">Close</button>
+        </div>
+    </div>
+</div>
+
+<div id="editModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:7000; justify-content:center; align-items:center;">
+  <div style="background:#fff; padding:20px; border-radius:10px; width:300px;">
+    <h3>Edit Record</h3>
+    <input type="text" id="editName" placeholder="Name" style="margin-bottom:8px" />
+    <input type="number" id="editKilos" placeholder="Kilos" style="margin-bottom:8px" />
+    <input type="email" id="editEmail" placeholder="Email" style="margin-bottom:8px" />
+    <select id="editServiceType" style="width:100%; padding:6px; margin-bottom:12px;">
+      <option value="Wash & Fold">Wash & Fold</option>
+      <option value="Wash & Iron">Wash & Iron</option>
+      <option value="Dry Clean">Dry Clean</option>
+      <option value="Express Service">Express Service</option>
+      <option value="Special Treatment">Special Treatment</option>
+    </select>
+    <div style="display:flex; justify-content:flex-end; gap:8px;">
+      <button class="btn" id="saveEditBtn">Save</button>
+      <button class="btn secondary" onclick="closeEditModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" style="display:none; position:fixed; right:18px; bottom:18px; color:white; padding:10px 14px; border-radius:10px; z-index:9999"></div>
+
+<div class="sidebar-overlay" onclick="closeSidebar()"></div>
+<script src="js/utils.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/laundry.js"></script>
+<script src="js/users.js"></script>
+<script src="js/qr.js"></script>
+<script src="js/reports.js"></script>
+<script src="js/records.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/script.js"></script>
+<script>
+    document.querySelector("form").addEventListener("submit", function (e) {
+    const emailInput = document.getElementById("custEmail");
+    const errorMsg = document.getElementById("emailError");
+
+    if (!emailInput.checkValidity()) {
+        e.preventDefault(); 
+        errorMsg.style.display = "block";
+        emailInput.focus();
+    } else {
+        errorMsg.style.display = "none";
+    }
+});
+</script>
+</body>
+</html>

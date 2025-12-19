@@ -1,0 +1,118 @@
+
+@media (max-width: 980px) {
+    .washing-machines-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .washing-machines-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    .machine-door {
+        width: 160px;
+        height: 160px;
+    }
+    
+    .door-circle {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .door-number {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .washing-machine-card {
+        padding: 20px;
+        min-height: 240px;
+    }
+    
+    .machine-top-panel {
+        gap: 12px;
+    }
+    
+    .label-text {
+        font-size: 1rem;
+        padding-left: 60px;
+    }
+    
+    .door-number {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width:980px){
+    .grid{grid-template-columns:repeat(2,1fr)}
+    .login-card{flex-direction:column}
+    .login-form{width:100%}
+}
+
+@media (max-width:768px){
+    .grid{grid-template-columns:1fr}
+    .navbar{padding:.6rem}
+    .sidebar{width:240px}
+    .brand .title{font-size:0.9rem;}
+    .container{padding:1rem;}
+    
+    .filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+    
+    .filter-bar > div {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+    
+    .filter-bar select {
+        flex: 1;
+        min-width: 120px;
+    }
+    
+    #sortBy {
+        flex: 1;
+    }
+    
+    .table-wrap {
+        margin: 0 -1rem;
+        border-radius: 0;
+    }
+}
+
+@media (max-width:480px){
+    .brand .title{display:none}
+    .nav-right .muted{display:none}
+    .login-splash{min-width:280px; padding:1.5rem;}
+    
+    .btn {
+        padding: 0.5rem 0.7rem;
+        font-size: 0.85rem;
+    }
+    
+    input, select {
+        font-size: 16px; 
+        padding: 12px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .filter-bar > div {
+        width: 100%;
+    }
+    
+    .filter-bar > div:first-child {
+        margin-bottom: 8px;
+    }
+}

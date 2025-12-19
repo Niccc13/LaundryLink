@@ -1,0 +1,95 @@
+:root{
+    --bg-grad: linear-gradient(135deg,#eaf2ff 0%, #f7fbff 50%, #ffffff 100%);
+    --card-bg: #ffffff;
+    --primary: #2962ff;
+    --primary-2: #3f51b5;
+    --accent: #00bfa5;
+    --muted: #6b7280;
+    --light: #f4f7fb;
+    --danger: #e53935;
+    --success: #2e7d32;
+    --rounded: 12px;
+    --shadow-1: 0 6px 18px rgba(32,40,60,0.06);
+    --shadow-2: 0 8px 30px rgba(32,40,60,0.08);
+}
+
+*{box-sizing:border-box}
+html,body{
+    height:100%;
+    margin:0;
+    padding:0;
+}
+body{
+    font-family: Inter, "Segoe UI", Roboto, system-ui, -apple-system, "Helvetica Neue", Arial;
+    background-color: #e3e5e7;
+    color:#0f1724;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.4;
+    backdrop-filter: blur(3px); 
+
+}
+
+.container{
+    max-width:1400px;
+    margin:0 auto;
+    padding:1.25rem;
+}
+
+.btn{
+    display:inline-flex;
+    align-items:center;
+    gap:.5rem;
+    padding:.6rem .9rem;
+    background:var(--primary);
+    color:white;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:600;
+    box-shadow:var(--shadow-1);
+    transition:transform .14s ease, box-shadow .14s ease;
+}
+.btn:hover{transform:translateY(-2px); box-shadow:var(--shadow-2)}
+.btn.secondary{background:#eef2ff; color:var(--primary); font-weight:700}
+.btn.success{background:var(--success); color:white;}
+.btn.delete{background:var(--danger); color:white;}
+.btn.edit{background:#ff9800; color:white;}
+
+input, select, textarea{
+    width:100%;
+    padding:.65rem .75rem;
+    border-radius:10px;
+    border:1px solid #e6eefb;
+    background:#fff;
+    font-size:0.95rem;
+    outline:none;
+    transition:box-shadow .12s ease, border-color .12s ease;
+}
+input:focus, select:focus, textarea:focus{
+    box-shadow:0 6px 18px rgba(41,98,255,0.08);
+    border-color:var(--primary);
+}
+
+h1,h2,h3{margin:0 0 .5rem}
+p{margin:0 0 .75rem; color:var(--muted)}
+
+.card{
+    background:var(--card-bg); 
+    padding:1.5rem; 
+    border-radius:12px; 
+    box-shadow:var(--shadow-1);
+    border:1px solid #eef4ff;
+}
+
+.recordcard{
+    background:var(--card-bg); 
+    border-radius:12px; 
+    box-shadow:var(--shadow-1);
+    border:1px solid #eef4ff;
+}
+
+.grid{
+    display:grid; 
+    grid-template-columns:repeat(3,1fr); 
+    gap:1rem
+}

@@ -1,0 +1,56 @@
+#qrPopup {
+    display:none; 
+    position:fixed; 
+    inset:0; 
+    background:rgba(0,0,0,0.5); 
+    z-index:6000; 
+    justify-content:center; 
+    align-items:center;
+}
+
+#qrPopup > div {
+    background:white; 
+    padding:24px; 
+    border-radius:16px; 
+    text-align:center;
+    box-shadow: var(--shadow-2);
+    min-width: 300px;
+}
+
+#qrCanvas {
+    margin:16px auto; 
+    border:1px solid #eee;
+    background: white;
+    padding: 10px;
+}
+
+#editModal {
+    display:none; 
+    position:fixed; 
+    inset:0; 
+    background:rgba(0,0,0,0.5); 
+    z-index:7000; 
+    justify-content:center; 
+    align-items:center;
+}
+
+#editModal > div {
+    background:#fff; 
+    padding:24px; 
+    border-radius:16px; 
+    width:340px;
+    box-shadow: var(--shadow-2);
+}
+
+#toast {
+    display:none; 
+    position:fixed; 
+    right:18px; 
+    bottom:18px; 
+    color:white; 
+    padding:14px 20px; 
+    border-radius:12px; 
+    z-index:9999;
+    box-shadow: var(--shadow-2);
+    font-weight: 500;
+}

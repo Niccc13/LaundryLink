@@ -1,0 +1,99 @@
+#loginScreen, #registerScreen{
+    position:fixed;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:4000;
+    padding:1rem;
+    background:linear-gradient(180deg, rgb(255, 255, 255), rgb(34, 156, 244));
+}
+
+.login-card{
+    width:100%;
+    max-width:900px;
+    border-radius:16px;
+    overflow:hidden;
+    display:flex;
+    background:white;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.2);
+}
+
+.login-splash{
+    flex:1;
+    min-width:320px;
+    padding:2.25rem;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:.75rem;
+    align-items:center;
+    text-align:center;
+    background: var( --card-bg);
+    color:white;
+}
+
+.login-form{
+    width:420px;
+    padding:2rem;
+    display:flex;
+    gap:1rem;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.login-form h2{
+    color:var(--primary); 
+    margin-bottom:1rem;
+}
+
+.small-muted{
+    font-size:0.85rem; 
+    color:var(--muted); 
+    margin-bottom:4px; 
+    display:block;
+}
+
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-wrapper input {
+    padding-right: 40px;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 18px;
+    user-select: none;
+    padding: 4px;
+    border-radius: 4px;
+    transition: color 0.2s;
+}
+
+.password-toggle:hover {
+    color: var(--primary);
+    background: rgba(41, 98, 255, 0.1);
+}
+
+.support-box {
+    margin-top: 25px;
+    padding: 15px;
+    background-color: #f8fafc;
+    border-radius: 8px;
+    border-left: 4px solid var(--primary);
+    font-size: 0.85rem;
+}
+
+.support-title {
+    font-weight: bold;
+    color: var(--primary);
+    margin-bottom: 5px;
+    display: block;
+}
